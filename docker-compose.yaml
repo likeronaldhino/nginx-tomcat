@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  demo-nginx:
+    image: nginx
+    ports:
+      - '80:80'
+      - '443:443'
+    depends_on:
+      - tomcat-7
+    volumes:
+      - .:/task
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+  tomcat-7:
+    image: tomcat:7-slim
+    volumes:
+      - ./server.xml:/usr/local/tomcat/conf/server.xml
+networks:
+  nginx-tomcat:
+    driver: bridge
